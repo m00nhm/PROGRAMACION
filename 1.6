@@ -1,0 +1,279 @@
+Fibonacci inverso: Implementa una función que calcule los primeros N
+#números de la serie de Fibonacci en orden inverso.
+def fibonacciinverso(n):
+    fib = [0, 1]
+    for _ in range(2, n):
+        fib.append(fib[-1] + fib[-2])
+    return fib[::-1]
+print(fibonacciinverso(10))
+Fibonacci generalizado: Crea una función que reciba dos números
+#iniciales y calcule una serie similar a Fibonacci, pero con estos números
+#como punto de partida
+def fibonaccigeneral():
+    a = int(input("Ingresa el primer número inicial: "))
+    b = int(input("Ingresa el segundo número inicial: "))
+    n = int(input("¿Cuántos términos deseas calcular?: "))
+    fib = [a, b]
+    for _ in range(2, n):
+        fib.append(fib[-1] + fib[-2])
+    return fib
+resultado = fibonaccigeneral()
+print("La serie generada es:", resultado)
+Posición en Fibonacci: Escribe una función que determine si un número
+#dado pertenece a la serie de Fibonacci. Si pertenece, devuelve su posición.
+def posicionfibonacci():
+    numero = int(input("Ingresa el número para verificar su posición en la serie de Fibonacci: "))
+    a, b, pos = 0, 1, 1
+    while a < numero:
+        a, b = b, a + b
+        pos += 1
+    if a == numero:
+        return f"El número {numero} está en la posición {pos} de la serie de Fibonacci."
+    else:
+        return f"El número {numero} no pertenece a la serie de Fibonacci."
+resultado = posicionfibonacci()
+print(resultado)
+Fibonacci y primos: Encuentra el número más cercano a un índice N en
+#la serie de Fibonacci que también sea primo.
+def esprimo(num):
+    if num < 2:
+        return False
+    for n in range(2, int(num**0.5) + 1):
+        if num % n == 0:
+            return False
+    return True
+def fibonacciprimocercano(n):
+    fib = [0, 1]
+    for _ in range(2, n + 1):
+        fib.append(fib[-1] + fib[-2])
+    for n in range(n, -1, -1):
+        if esprimo(fib[n]):
+            return fib[n]
+print(fibonacciprimocercano(10))
+Factorial: Pedir por teclado N y calcular el Factorial de N
+#(N! = 1 * 2 * 3 * ... * N)
+def calcular_factorial():
+    n = int(input("Ingresa un número para calcular su factorial: "))
+    if n < 0:
+        return "El factorial no está definido para números negativos."
+    factorial = 1
+    for i in range(2, n + 1):
+        factorial *= i
+    return f"El factorial de {n} es {factorial}."
+resultado = calcular_factorial()
+print(resultado)
+Sumas parciales de Fibonacci: Implementa un algoritmo para calcular la
+#suma de los primeros N términos de la serie de Fibonacci.
+def sumafibonacci():
+    n = int(input("Ingresa cuántos términos de Fibonacci sumar: "))
+    if n <= 0:
+        return "Por favor, ingresa un número mayor a 0."
+    fib = [0, 1]
+    for _ in range(2, n):
+        fib.append(fib[-1] + fib[-2])
+    suma = sum(fib[:n])
+    return f"La suma de los primeros {n} términos de Fibonacci es {suma}."
+resultado = sumafibonacci()
+print(resultado)
+#Cálculo numérico de integrales: Diseña una función para calcular la
+#integral definida de una función en un intervalo utilizando el método del
+#trapecio.
+from sympy import symbols, diff, solve
+def integral_trapecio(f, a, b, n=1000):
+    h = (b - a) / n
+    s = 0.5 * (f(a) + f(b))
+    for i in range(1, n):
+        s += f(a + i * h)
+    return s * h
+print(integral_trapecio(lambda x: x**2, 0, 3))
+Resolución de sistemas lineales: Implementa una función que resuelva
+#un sistema de ecuaciones lineales usando el método de eliminación de
+#Gauss.
+import numpy as np
+def resolver_sistema_gauss():
+    n = int(input("Ingresa el número de ecuaciones: "))
+    print("Ingresa la matriz de coeficientes:")
+    A = [list(map(float, input().split())) for _ in range(n)]
+    print("Ingresa los términos independientes:")
+    b = list(map(float, input().split()))
+    A = np.array(A)
+    b = np.array(b)
+    try:
+        sol = np.linalg.solve(A, b)
+        return f"Las soluciones son: {sol}"
+    except np.linalg.LinAlgError:
+        return "El sistema no tiene solución única."
+print(resolver_sistema_gauss())
+Autovalores y autovectores: Escribe un programa para calcular los
+#autovalores de una matriz 2x2.
+def calcular_autovalores():
+    print("Ingresa los coeficientes de la matriz 2x2 (fila por fila):")
+    matriz = [list(map(float, input().split())) for _ in range(2)]
+    matriz = np.array(matriz)
+    autovalores, autovectores = np.linalg.eig(matriz)
+    return f"Autovalores: {autovalores}\nAutovectores:\n{autovectores}"
+print(calcular_autovalores())
+Multiplicación de matrices grandes: Implementa un algoritmo para
+#multiplicar dos matrices dispersas eficientemente.
+def multiplicar_matrices():
+    print("Ingresa el tamaño de la primera matriz (filas columnas):")
+    filas_a, columnas_a = map(int, input().split())
+    print("Ingresa los elementos de la primera matriz:")
+    matriz_a = [list(map(float, input().split())) for _ in range(filas_a)]
+    print("Ingresa el tamaño de la segunda matriz (filas columnas):")
+    filas_b, columnas_b = map(int, input().split())
+    print("Ingresa los elementos de la segunda matriz:")
+    matriz_b = [list(map(float, input().split())) for _ in range(filas_b)]
+    if columnas_a != filas_b:
+        return "No se pueden multiplicar estas matrices."
+    matriz_a = np.array(matriz_a)
+    matriz_b = np.array(matriz_b)
+    resultado = np.dot(matriz_a, matriz_b)
+    return f"Resultado:\n{resultado}"
+print(multiplicar_matrices())
+Determinante de una matriz: Crea una función que calcule el
+#determinante de matrices de hasta 4x4
+def calcular_determinante():
+    print("Ingresa el tamaño de la matriz (n x n):")
+    n = int(input())
+    print(f"Ingresa los elementos de la matriz {n}x{n}:")
+    matriz = [list(map(float, input().split())) for _ in range(n)]
+    matriz = np.array(matriz)
+    determinante = np.linalg.det(matriz)
+    return f"El determinante de la matriz es: {determinante:.2f}"
+print(calcular_determinante())
+Raíces de polinomios: Diseña un programa que encuentre todas las raíces
+#reales de un polinomio de tercer grado.
+def encontrar_raices():
+    print("Ingresa los coeficientes del polinomio (de mayor a menor grado):")
+    coeficientes = list(map(float, input().split()))
+    raices = np.roots(coeficientes)
+    return f"Las raíces del polinomio son: {raices}"
+print(encontrar_raices())
+Números amigables: Escribe un programa para determinar si dos
+#números dados son amigables (la suma de los divisores de uno es igual al
+#otro y viceversa).
+def suma_divisores(n):
+    return sum(i for i in range(1, n // 2 + 1) if n % i == 0)
+def numeros_amigables():
+    print("Ingresa dos números:")
+    a = int(input("Número 1: "))
+    b = int(input("Número 2: "))
+    if suma_divisores(a) == b and suma_divisores(b) == a:
+        return f"{a} y {b} son números amigables."
+    else:
+        return f"{a} y {b} no son números amigables."
+print(numeros_amigables())
+Factorización optimizada: Diseña una función para descomponer un
+#número en sus factores primos de forma eficiente.
+def factorizacion_primos(n):
+    factores = []
+    divisor = 2
+    while n > 1:
+        while n % divisor == 0:
+            factores.append(divisor)
+            n //= divisor
+        divisor += 1
+    return factores
+print("Ingresa un número para factorizar:")
+numero = int(input())
+print(f"Los factores primos de {numero} son: {factorizacion_primos(numero)}")
+#Número de caminos: Calcula el número de caminos posibles en una
+#cuadrícula NxN, moviéndose solo hacia la derecha o hacia abajo
+from math import comb
+def caminos_en_cuadricula():
+    n = int(input("Ingresa el tamaño de la cuadrícula (N): "))
+    caminos = comb(2 * n, n)
+    return f"El número de caminos posibles en una cuadrícula {n}x{n} es {caminos}."
+print(caminos_en_cuadricula())
+#Gráfica de Fibonacci acumulativo: Genera una gráfica de barras donde el
+#eje X representa los índices de la serie de Fibonacci y el eje Y la suma
+#acumulada de los términos hasta ese índice.
+import matplotlib.pyplot as plt
+def grafica_fibonacci_acumulativa():
+    n = int(input("Ingresa cuántos términos de Fibonacci deseas graficar: "))
+    fib = [0, 1]
+    for _ in range(2, n):
+        fib.append(fib[-1] + fib[-2])
+    suma_acumulada = [sum(fib[:i + 1]) for i in range(n)]
+    plt.bar(range(n), suma_acumulada)
+    plt.xlabel("Índice de Fibonacci")
+    plt.ylabel("Suma acumulativa")
+    plt.title("Suma acumulativa de la serie de Fibonacci")
+    plt.show()
+grafica_fibonacci_acumulativa()
+Pendiente y tangente: Grafica una función f(x)=x**3 - 4*x**2+ 6*x como y,
+#en el mismo gráfico, muestra la recta tangente en un punto dado
+import numpy as np
+import matplotlib.pyplot as plt
+def derivada_aproximada(f, x, h=1e-5):
+    """Calcula la derivada aproximada de f en x usando diferencias finitas."""
+    return (f(x + h) - f(x - h)) / (2 * h)
+def grafica_tangente():
+    funcion_str = input("Ingresa la función en términos de x (por ejemplo: x**2 + 3*x): ")
+    x0 = float(input("Ingresa el punto donde calcular la tangente: "))
+    f = lambda x: eval(funcion_str)
+    pendiente = derivada_aproximada(f, x0)
+    b = f(x0) - pendiente * x0  # Intersección con el eje y (y = mx + b)
+    tangente = lambda x: pendiente * x + b
+    x_vals = np.linspace(x0 - 5, x0 + 5, 400)
+    y_vals = f(x_vals)
+    tangente_vals = tangente(x_vals)
+    plt.plot(x_vals, y_vals, label="Función", color="blue")
+    plt.plot(x_vals, tangente_vals, '--', label=f"Tangente en x={x0}", color="red")
+    plt.scatter([x0], [f(x0)], color="green", zorder=5, label=f"Punto ({x0}, {f(x0):.2f})")
+    plt.title("Función y su recta tangente")
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.axhline(0, color='black', linewidth=0.8, linestyle="--")
+    plt.axvline(0, color='black', linewidth=0.8, linestyle="--")
+    plt.legend()
+    plt.grid()
+    plt.show()
+grafica_tangente()
+Visualización de raíces: Representa gráficamente un polinomio P(x) y
+#marca en la gráfica las raíces reales calculadas.
+import numpy as np
+import matplotlib.pyplot as plt
+def visualizar_raices():
+    print("Ingresa los coeficientes del polinomio (de mayor a menor grado):")
+    coeficientes = list(map(float, input().split()))
+    raices = np.roots(coeficientes)
+    raices_reales = [r.real for r in raices if np.isreal(r)]
+    x = np.linspace(-10, 10, 400)
+    y = np.polyval(coeficientes, x)
+    plt.plot(x, y, label='Polinomio')
+    plt.axhline(0, color='black', linewidth=0.8, linestyle='--')  # Eje x
+    for r in raices_reales:
+        plt.scatter(r, 0, color='red', label=f"Raíz: {r:.2f}")
+    plt.title("Visualización de raíces de un polinomio")
+    plt.xlabel("x")
+    plt.ylabel("P(x)")
+    plt.legend()
+    plt.grid()
+    plt.show()
+visualizar_raices()
+Simulación de ondas: Dibuja la superposición de dos ondas.
+import numpy as np
+import matplotlib.pyplot as plt
+def simulacion_ondas():
+    print("Para la primera onda:")
+    amp1 = float(input("Ingresa la amplitud: "))
+    freq1 = float(input("Ingresa la frecuencia: "))
+    print("Para la segunda onda:")
+    amp2 = float(input("Ingresa la amplitud: "))
+    freq2 = float(input("Ingresa la frecuencia: "))
+    t = np.linspace(0, 2 * np.pi, 1000)
+    onda1 = amp1 * np.sin(freq1 * t)
+    onda2 = amp2 * np.sin(freq2 * t)
+    superposicion = onda1 + onda2
+    plt.plot(t, onda1, label="Onda 1", alpha=0.7)
+    plt.plot(t, onda2, label="Onda 2", alpha=0.7)
+    plt.plot(t, superposicion, label="Superposición", color='black', linewidth=1.2)
+    plt.title("Simulación de ondas")
+    plt.xlabel("Tiempo")
+    plt.ylabel("Amplitud")
+    plt.legend()
+    plt.grid()
+    plt.show()
+simulacion_ondas()
